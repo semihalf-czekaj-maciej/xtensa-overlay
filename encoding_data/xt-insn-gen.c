@@ -30,7 +30,9 @@ int find_format(int slot)
 
 void clear_insn(xtensa_insnbuf insn)
 {
-	insn[0] = insn[1] = insn[2] = insn[3] = 0;
+	int i;
+	for (i=0; i< MAX_INSN_WORDS; i++)
+		insn[i] = 0;
 }
 
 int find_set_bits(const xtensa_insnbuf insn, unsigned char setbits[MAX_INSN_BITS])

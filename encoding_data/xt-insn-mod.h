@@ -12,9 +12,10 @@
 
 // Biggest HiFi 5 bundle is 11 bytes
 #define MAX_INSN_BITS 88
+#define MAX_INSN_WORDS ((MAX_INSN_BITS + 31)/32)
 
 typedef unsigned int uint32;
-typedef unsigned int xtensa_insnbuf[(MAX_INSN_BITS + 31)/32];
+typedef unsigned int xtensa_insnbuf[MAX_INSN_WORDS];
 
 typedef struct {
 	const char *name;
