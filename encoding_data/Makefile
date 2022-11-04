@@ -15,7 +15,9 @@ CFLAGS = -std=c11 -Wall -Wno-unused-variable
 
 JSONS := $(patsubst %.tar,%.json,$(basename $(notdir $(wildcard $(OVERLAY_DIR)/*.tar*))))
 
-all: $(JSONS)
+TBLGEN = XtensaHIFI3InstrInfo.td XtensaHIFI4InstrInfo.td
+
+all: $(TBLGEN) $(JSONS)
 
 clean:
 	rm -f tmpmod-* insgen-* *.json
@@ -42,3 +44,6 @@ insgen-% : tmpmod-%.o xt-insn-gen.c
 %.json : insgen-%
 	./$< > $@
 	./validate.py $@
+
+$(TBLGEN) &: $(JSONS)
+	./generate.py $(JSONS)

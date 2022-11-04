@@ -84,8 +84,8 @@ void opcode_variant(xtensa_opcode_encode_fn encoder, int slot,
 	xtensa_slot_internal *s = &xtensa_modules.slots[slot];
 	int fid = find_format(slot);
 
-	printf("\n   { \"format\" : \"%s\", \"slot\" : %d,\n", s->format, s->slot);
-
+	printf("\n   { \"format\" : \"%s\", \"slot\" : %d,\"length\" : %d,\n", 
+		s->format, s->slot, xtensa_modules.formats[fid].length);
 	unsigned char bits[MAX_INSN_BITS];
 	xtensa_insnbuf insn, insn2;
 	int n_bits;

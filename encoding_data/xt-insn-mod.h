@@ -106,7 +106,7 @@ typedef struct {
 
 typedef struct {
 	const char *name;
-	int unused0;
+  	int length;
 	xtensa_opcode_encode_fn encode;
 	int n_slots;
 	int *slots;
