@@ -121,15 +121,30 @@ void opcode_variant(xtensa_opcode_encode_fn encoder, int slot,
 	printf("     \"args\" : [");
 	for (int i = 0; i < iclass->n_operands; i++) {
 		int opid = iclass->operands[i].id[0];
+		char dir = iclass->operands[i].io;
 		xtensa_operand_internal *op = &xtensa_modules.operands[opid];
-
 		n_bits = find_arg_bits(s->field_setters[op->field],
 				       s->set_slot, bits);
 
 		if (i != 0) {
 			printf(",");
 		}
+		const char *regname = "";
+		if (op->regfile >= 0) 
+			regname = xtensa_modules.regfiles[op->regfile].name;
+
+		char flags[5] = {0};
+		uint32 fl = op->flags;
+		flags[0] = fl & XTENSA_OPERAND_IS_REGISTER ? 'r' : ' ';
+		flags[1] = fl & XTENSA_OPERAND_IS_PCRELATIVE ? 'p' : ' ';
+		flags[2] = fl & XTENSA_OPERAND_IS_INVISIBLE ? 'i' : ' ';
+		flags[3] = fl & XTENSA_OPERAND_IS_UNKNOWN ? 'u' : ' ';
+
 		printf("\n       { \"arg\" : \"%s\",\n", op->name);
+		printf("         \"dir\" : \"%c\",\n", dir);
+		printf("         \"reg\" : \"%s\",\n", regname);
+		printf("         \"num_regs\" : \"%d\",\n", op->num_regs);
+		printf("         \"flags\" : \"%s\",\n", flags);
 		printf("         \"field_bits\" : [");
 		print_bits(n_bits, bits);
 		printf(" ] }");

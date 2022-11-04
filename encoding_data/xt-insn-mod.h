@@ -66,9 +66,9 @@ typedef struct {
 typedef struct {
 	const char *name;
 	int field;
-	int unused0;
-	int unused1;
-	int unused2;
+  	int regfile;
+  	int num_regs;
+  	uint32 flags;
 	void *encode_fn;
 	void *decode_fn;
 	void *ator_fn;
@@ -131,7 +131,7 @@ typedef struct {
 	xtensa_opcode_internal *opcodes;
 	void *unused1;
 	int n_regfiles;
-	void *unused2;
+	xtensa_regfile_internal *regfiles;
 	int n_states;
 	void *states;
 	void *unused3;
